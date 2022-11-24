@@ -19,23 +19,24 @@ public class Session {
     private String title;
 
     /**
-     * Фотография для фильма
+     * Постер для фильма
      */
     private byte[] photo;
 
     /**
-     * Продолжительность
+     * Описание
      */
-    private String duration;
+    private String desc;
 
     public Session() {
 
     }
 
-    public Session(int id, String title, String duration) {
+    public Session(int id, String title, String desc, byte[] photo) {
         this.id = id;
         this.title = title;
-        this.duration = duration;
+        this.desc = desc;
+        this.photo = photo;
     }
 
     public int getId() {
@@ -62,12 +63,12 @@ public class Session {
         this.photo = photo;
     }
 
-    public String getDuration() {
-        return duration;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     @Override

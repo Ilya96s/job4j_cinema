@@ -19,6 +19,11 @@ public class User {
     private String name;
 
     /**
+     * Пароль пользователя
+     */
+    private String password;
+
+    /**
      * Email пользователя
      */
     private String email;
@@ -32,9 +37,10 @@ public class User {
 
     }
 
-    public User(int id, String name, String email, String phone) {
+    public User(int id, String name, String password, String email, String phone) {
         this.id = id;
         this.name = name;
+        this.password = password;
         this.email = email;
         this.phone = phone;
     }
@@ -47,12 +53,20 @@ public class User {
         return name;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {
@@ -63,11 +77,11 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPassword(String phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
