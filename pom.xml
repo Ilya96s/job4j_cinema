@@ -18,6 +18,31 @@
     <java.version>17</java.version>
   </properties>
 
+  <profiles>
+    <profile>
+      <id>test</id>
+      <properties>
+        <db.url>jdbc:h2:${basedir}/testdb;MODE=PostgreSQL;CASE_INSENSITIVE_IDENTIFIERS=TRUE;</db.url>
+        <db.username></db.username>
+        <db.password></db.password>
+        <db.driver>org.h2.Driver</db.driver>
+        <version>1.4.200</version>
+      </properties>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+    </profile>
+    <profile>
+      <id>production</id>
+      <properties>
+        <db.url>jdbc:postgresql://127.0.0.1:5432/cinema</db.url>
+        <db.username>postgres</db.username>
+        <db.password>password</db.password>
+        <db.driver>org.postgresql.Driver</db.driver>
+      </properties>
+    </profile>
+  </profiles>
+
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -87,6 +112,13 @@
       <version>2.7.0</version>
     </dependency>
 
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>2.1.214</version>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -149,9 +181,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.0.0-M7</version>
-        <configuration>
-          <skipTests>false</skipTests>
-        </configuration>
       </plugin>
 
       <plugin>
@@ -163,11 +192,26 @@
       <plugin>
         <groupId>org.liquibase</groupId>
         <artifactId>liquibase-maven-plugin</artifactId>
-        <version>4.15.0</version>
+        <version>3.6.2</version>
         <configuration>
-          <propertyFile>db/liquibase.properties</propertyFile>
+          <changeLogFile>${basedir}/db/dbchangelog.xml</changeLogFile>
+          <url>${db.url}</url>
+          <driver>${db.driver}</driver>
+          <username>${db.username}</username>
+          <password>${db.password}</password>
+          <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
         </configuration>
+        <executions>
+          <execution>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>clearCheckSums</goal>
+              <goal>update</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
+
     </plugins>
   </build>
 
