@@ -77,12 +77,17 @@ public class PostgresSessionRepository implements SessionRepository {
     @Override
     public void add(Session session) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement(ADD_SESSION)
+             PreparedStatement ps = cn.prepareStatement(ADD_SESSION, PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, session.getTitle());
             ps.setString(2, session.getDesc());
             ps.setBytes(3, session.getPhoto());
             ps.execute();
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    session.setId(rs.getInt(1));
+                }
+            }
         } catch (Exception e) {
             LOG.error("Exception in method .add(Session session", e);
         }
