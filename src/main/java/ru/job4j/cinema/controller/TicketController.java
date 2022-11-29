@@ -58,7 +58,7 @@ public class TicketController {
     public String success(Model model, HttpSession session) {
         model.addAttribute("user", HttpSessionUtility.checkSession(session));
         model.addAttribute("row", session.getAttribute("row"));
-        model.addAttribute("place", session.getAttribute("row"));
+        model.addAttribute("place", session.getAttribute("place"));
         model.addAttribute("ses", session.getAttribute("ses"));
         return "ticket/ticketSuccess";
     }
