@@ -1,4 +1,4 @@
-package ru.job4j;
+package ru.job4j.cinema;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.boot.SpringApplication;

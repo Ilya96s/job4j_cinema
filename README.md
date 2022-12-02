@@ -6,7 +6,7 @@
 - SpringBoot 2.7.4
 - Thymeleaf
 - Bootstrap
-- PostgreSQL 42.5.0
+- PostgreSQL 14
 - Junit 5.9.1
 - AssertJ 3.23.1
 - Log4j 1.2.17
