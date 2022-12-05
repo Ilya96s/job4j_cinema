@@ -18,7 +18,7 @@ import java.util.Optional;
  */
 @Repository
 public class PostgresUserRepository implements UserRepository {
-    private final DataSource pool;
+    private final DataSource dataSource;
 
     private static final Logger LOG = LoggerFactory.getLogger(PostgresUserRepository.class.getName());
 
@@ -34,7 +34,7 @@ public class PostgresUserRepository implements UserRepository {
             """;
 
     public PostgresUserRepository(DataSource pool) {
-        this.pool = pool;
+        this.dataSource = pool;
     }
 
 
@@ -46,8 +46,8 @@ public class PostgresUserRepository implements UserRepository {
     @Override
     public Optional<User> add(User user) {
         Optional<User> result = Optional.empty();
-        try (Connection cn = pool.getConnection();
-            PreparedStatement ps = cn.prepareStatement(ADD_USER, PreparedStatement.RETURN_GENERATED_KEYS)
+        try (Connection cn = dataSource.getConnection();
+             PreparedStatement ps = cn.prepareStatement(ADD_USER, PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, user.getName());
             ps.setString(2, user.getPassword());
@@ -75,8 +75,8 @@ public class PostgresUserRepository implements UserRepository {
     @Override
     public Optional<User> findUserByEmailAndPassword(String email, String password) {
         Optional<User> result = Optional.empty();
-        try (Connection cn = pool.getConnection();
-            PreparedStatement ps = cn.prepareStatement(FIND_USER_BY_EMAIL_AND_PASSWORD)
+        try (Connection cn = dataSource.getConnection();
+             PreparedStatement ps = cn.prepareStatement(FIND_USER_BY_EMAIL_AND_PASSWORD)
         ) {
             ps.setString(1, email);
             ps.setString(2, password);

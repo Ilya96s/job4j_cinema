@@ -8,7 +8,6 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Optional;
 
 /**
@@ -19,7 +18,7 @@ import java.util.Optional;
 @Repository
 public class PostgresTicketRepository implements TicketRepository {
 
-    private final DataSource pool;
+    private final DataSource dataSource;
 
     private static final Logger LOG = LoggerFactory.getLogger(PostgresTicketRepository.class.getName());
 
@@ -29,7 +28,7 @@ public class PostgresTicketRepository implements TicketRepository {
             """;
 
     public PostgresTicketRepository(DataSource pool) {
-        this.pool = pool;
+        this.dataSource = pool;
     }
 
     /**
@@ -40,7 +39,7 @@ public class PostgresTicketRepository implements TicketRepository {
     @Override
     public Optional<Ticket> add(Ticket ticket) {
         Optional<Ticket> result = Optional.empty();
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(ADD_TICKET, PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setInt(1, ticket.getSessionId());

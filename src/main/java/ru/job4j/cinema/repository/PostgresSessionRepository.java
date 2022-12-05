@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 @Repository
 public class PostgresSessionRepository implements SessionRepository {
 
-    private final DataSource pool;
+    private final DataSource dataSource;
 
     private static final Logger LOG = LoggerFactory.getLogger(PostgresSessionRepository.class.getName());
 
@@ -46,7 +46,7 @@ public class PostgresSessionRepository implements SessionRepository {
             """;
 
     public PostgresSessionRepository(DataSource pool) {
-        this.pool = pool;
+        this.dataSource = pool;
     }
 
     /**
@@ -56,7 +56,7 @@ public class PostgresSessionRepository implements SessionRepository {
     @Override
     public Collection<Session> findAll() {
         List<Session> sessions = new ArrayList<>();
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(FIND_ALL)
         ) {
             try (ResultSet rs = ps.executeQuery()) {
@@ -76,7 +76,7 @@ public class PostgresSessionRepository implements SessionRepository {
      */
     @Override
     public void add(Session session) {
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(ADD_SESSION, PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, session.getTitle());
@@ -100,7 +100,7 @@ public class PostgresSessionRepository implements SessionRepository {
      */
     @Override
     public Session findById(int id) {
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(FIND_SESSION_BY_ID)
         ) {
             ps.setInt(1, id);
@@ -121,7 +121,7 @@ public class PostgresSessionRepository implements SessionRepository {
      */
     @Override
     public void update(Session session) {
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(UPDATE_SESSION)
         ) {
             ps.setString(1, session.getTitle());
