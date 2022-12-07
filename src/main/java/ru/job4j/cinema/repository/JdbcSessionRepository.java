@@ -19,11 +19,11 @@ import javax.sql.DataSource;
  * @author Ilya Kaltygin
  */
 @Repository
-public class PostgresSessionRepository implements SessionRepository {
+public class JdbcSessionRepository implements SessionRepository {
 
     private final DataSource dataSource;
 
-    private static final Logger LOG = LoggerFactory.getLogger(PostgresSessionRepository.class.getName());
+    private static final Logger LOG = LoggerFactory.getLogger(JdbcSessionRepository.class.getName());
 
     private static final String FIND_ALL = """
             SELECT * FROM sessions
@@ -45,8 +45,8 @@ public class PostgresSessionRepository implements SessionRepository {
             WHERE id = ?
             """;
 
-    public PostgresSessionRepository(DataSource pool) {
-        this.dataSource = pool;
+    public JdbcSessionRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     /**

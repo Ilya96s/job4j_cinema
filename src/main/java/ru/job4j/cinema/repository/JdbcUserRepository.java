@@ -17,10 +17,10 @@ import java.util.Optional;
  * @author Ilya Kaltygin
  */
 @Repository
-public class PostgresUserRepository implements UserRepository {
+public class JdbcUserRepository implements UserRepository {
     private final DataSource dataSource;
 
-    private static final Logger LOG = LoggerFactory.getLogger(PostgresUserRepository.class.getName());
+    private static final Logger LOG = LoggerFactory.getLogger(JdbcUserRepository.class.getName());
 
     private static final String ADD_USER = """
             INSERT INTO users(username, password, email, phone)
@@ -33,8 +33,8 @@ public class PostgresUserRepository implements UserRepository {
             AND password = ?
             """;
 
-    public PostgresUserRepository(DataSource pool) {
-        this.dataSource = pool;
+    public JdbcUserRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
 

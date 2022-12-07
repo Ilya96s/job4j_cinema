@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.*;
  *
  * @author Ilya Kaltygin
  */
-class PostgresSessionRepositoryTest {
+class JdbcSessionRepositoryTest {
 
     /**
      * Загрузка настроек
@@ -28,7 +28,7 @@ class PostgresSessionRepositoryTest {
         Properties cfg = new Properties();
         try (BufferedReader io = new BufferedReader(
                 new InputStreamReader(
-                        PostgresSessionRepositoryTest.class.getClassLoader()
+                        JdbcSessionRepositoryTest.class.getClassLoader()
                                 .getResourceAsStream("db.properties")
                 )
         )) {
@@ -78,7 +78,7 @@ class PostgresSessionRepositoryTest {
      */
     @Test
     void whenAddAndThenFindAll() {
-        PostgresSessionRepository repository = new PostgresSessionRepository(loadPool());
+        JdbcSessionRepository repository = new JdbcSessionRepository(loadPool());
 
         Session session1 = new Session();
         session1.setTitle("Film №1");
@@ -110,7 +110,7 @@ class PostgresSessionRepositoryTest {
      */
     @Test
     void whenAddThenFindSession() {
-        PostgresSessionRepository repository = new PostgresSessionRepository(loadPool());
+        JdbcSessionRepository repository = new JdbcSessionRepository(loadPool());
 
         Session session = new Session();
         session.setTitle("Film №1");
@@ -126,7 +126,7 @@ class PostgresSessionRepositoryTest {
      */
     @Test
     void whenUpdateSession() {
-        PostgresSessionRepository repository = new PostgresSessionRepository(loadPool());
+        JdbcSessionRepository repository = new JdbcSessionRepository(loadPool());
 
         Session session1 = new Session();
 

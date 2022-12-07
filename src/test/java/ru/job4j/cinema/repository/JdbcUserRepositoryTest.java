@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.*;
  *
  * @author Ilya Kaltygin
  */
-class PostgresUserRepositoryTest {
+class JdbcUserRepositoryTest {
 
     /**
      * Загрузка настроек
@@ -28,7 +28,7 @@ class PostgresUserRepositoryTest {
         Properties cfg = new Properties();
         try (BufferedReader io = new BufferedReader(
                 new InputStreamReader(
-                        PostgresUserRepositoryTest.class.getClassLoader()
+                        JdbcUserRepositoryTest.class.getClassLoader()
                                 .getResourceAsStream("db.properties")
                 )
         )) {
@@ -78,7 +78,7 @@ class PostgresUserRepositoryTest {
      */
     @Test
     void whenAddUser() {
-        PostgresUserRepository repository = new PostgresUserRepository(loadPool());
+        JdbcUserRepository repository = new JdbcUserRepository(loadPool());
 
         User user = new User();
         user.setName("name");
@@ -99,7 +99,7 @@ class PostgresUserRepositoryTest {
      */
     @Test
     void findUserByEmailAndPassword() {
-        PostgresUserRepository repository = new PostgresUserRepository(loadPool());
+        JdbcUserRepository repository = new JdbcUserRepository(loadPool());
 
         User user1 = new User();
         user1.setName("First user name");

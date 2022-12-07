@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.*;
  *
  * @author Ilya Kaltygin
  */
-class PostgresTicketRepositoryTest {
+class JdbcTicketRepositoryTest {
 
     /**
      * Загрузка настроек
@@ -29,7 +29,7 @@ class PostgresTicketRepositoryTest {
         Properties cfg = new Properties();
         try (BufferedReader io = new BufferedReader(
                 new InputStreamReader(
-                        PostgresTicketRepositoryTest.class.getClassLoader()
+                        JdbcTicketRepositoryTest.class.getClassLoader()
                                 .getResourceAsStream("db.properties")
                 )
         )) {
@@ -83,13 +83,13 @@ class PostgresTicketRepositoryTest {
      */
     @Test
     public void whenAddTicket() {
-        PostgresSessionRepository sessionRepository = new PostgresSessionRepository(loadPool());
+        JdbcSessionRepository sessionRepository = new JdbcSessionRepository(loadPool());
         Session session = new Session();
         session.setTitle("Film №1");
         session.setDesc("Desc №1");
         sessionRepository.add(session);
 
-        PostgresUserRepository userRepository = new PostgresUserRepository(loadPool());
+        JdbcUserRepository userRepository = new JdbcUserRepository(loadPool());
 
         User user = new User();
         user.setName("First user name");
@@ -98,7 +98,7 @@ class PostgresTicketRepositoryTest {
         user.setPhone("First user phone");
         userRepository.add(user);
 
-        PostgresTicketRepository ticketRepository = new PostgresTicketRepository(loadPool());
+        JdbcTicketRepository ticketRepository = new JdbcTicketRepository(loadPool());
         Ticket ticket = new Ticket();
         ticket.setRow(1);
         ticket.setPlace(1);
@@ -114,13 +114,13 @@ class PostgresTicketRepositoryTest {
      */
     @Test
     public void whenAdded1TicketAndNotAdded2Ticket() {
-        PostgresSessionRepository sessionRepository = new PostgresSessionRepository(loadPool());
+        JdbcSessionRepository sessionRepository = new JdbcSessionRepository(loadPool());
         Session session = new Session();
         session.setTitle("Film №1");
         session.setDesc("Desc №1");
         sessionRepository.add(session);
 
-        PostgresUserRepository userRepository = new PostgresUserRepository(loadPool());
+        JdbcUserRepository userRepository = new JdbcUserRepository(loadPool());
 
         User user = new User();
         user.setName("First user name");
@@ -129,7 +129,7 @@ class PostgresTicketRepositoryTest {
         user.setPhone("First user phone");
         userRepository.add(user);
 
-        PostgresTicketRepository ticketRepository = new PostgresTicketRepository(loadPool());
+        JdbcTicketRepository ticketRepository = new JdbcTicketRepository(loadPool());
         Ticket ticket1 = new Ticket();
         ticket1.setRow(1);
         ticket1.setPlace(1);

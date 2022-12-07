@@ -16,19 +16,19 @@ import java.util.Optional;
  * @author Ilya Kaltygin
  */
 @Repository
-public class PostgresTicketRepository implements TicketRepository {
+public class JdbcTicketRepository implements TicketRepository {
 
     private final DataSource dataSource;
 
-    private static final Logger LOG = LoggerFactory.getLogger(PostgresTicketRepository.class.getName());
+    private static final Logger LOG = LoggerFactory.getLogger(JdbcTicketRepository.class.getName());
 
     private static final String ADD_TICKET = """
             INSERT INTO tickets(session_id, pos_row, cell, user_id)
             VALUES(?, ?, ?, ?)
             """;
 
-    public PostgresTicketRepository(DataSource pool) {
-        this.dataSource = pool;
+    public JdbcTicketRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     /**
