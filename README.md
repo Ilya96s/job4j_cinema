@@ -4,8 +4,8 @@
 # Стек технологий
 - Java 17
 - SpringBoot 2.7.4
-- Thymeleaf
-- Bootstrap
+- Thymeleaf 2.7.4
+- Bootstrap 4.4.1
 - PostgreSQL 14
 - Junit 5.9.1
 - AssertJ 3.23.1
