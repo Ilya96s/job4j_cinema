@@ -1,5 +1,6 @@
 package ru.job4j.cinema.repository;
 
+import net.jcip.annotations.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -13,9 +14,15 @@ import java.util.Optional;
 /**
  * PostgresTicketRepository - логика работы с базой данных
  *
+ * Класс является потокобезопасным. Проблема, возникающая при добавлении одинаковых билетов в методе add()
+ * решена на уровне базы данных с помощью ограничений. Поля sessionId, row и place должны быть уникальынми. Eсли две параллельные транзакции
+ * выполнят запрос с одинаковым id сеанса, рядом и местом, то та что будет быстрее выполнится,
+ * а вторая вернется с ошибкой ConstrainsViolationException
+ *
  * @author Ilya Kaltygin
  */
 @Repository
+@ThreadSafe
 public class JdbcTicketRepository implements TicketRepository {
 
     private final DataSource dataSource;

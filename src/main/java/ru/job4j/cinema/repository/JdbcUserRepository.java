@@ -1,5 +1,6 @@
 package ru.job4j.cinema.repository;
 
+import net.jcip.annotations.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -14,9 +15,15 @@ import java.util.Optional;
 /**
  * PostgresUserRepository - логика работы с базой данных
  *
+ * Класс является потокобезопасным. Проблема, возникающая при добавлении одинаковых пользователей в методе add()
+ * решена на уровне базы данных с помощью ограничений. Поля email и phone должны быть уникальынми. Eсли две параллельные транзакции
+ * выполнят запрос с одинаковой почтой и одинаковым номером телеофна, то та что будет быстрее выполнится,
+ * а вторая вернется с ошибкой ConstrainsViolationException
+ *
  * @author Ilya Kaltygin
  */
 @Repository
+@ThreadSafe
 public class JdbcUserRepository implements UserRepository {
     private final DataSource dataSource;
 

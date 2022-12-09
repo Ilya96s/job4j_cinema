@@ -1,5 +1,6 @@
 package ru.job4j.cinema.repository;
 
+import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Repository;
 import ru.job4j.cinema.model.Session;
 import java.sql.Connection;
@@ -19,6 +20,7 @@ import javax.sql.DataSource;
  * @author Ilya Kaltygin
  */
 @Repository
+@ThreadSafe
 public class JdbcSessionRepository implements SessionRepository {
 
     private final DataSource dataSource;
