@@ -19,6 +19,8 @@ import javax.servlet.http.HttpSession;
 
 /**
  * SessionController - контроллер, обрабатывающий запросы от клиента и возвращающий результаты
+ *
+ * @author Ilya Kaltygin
  */
 @Controller
 @ThreadSafe
@@ -115,7 +117,7 @@ public class SessionController {
         return ResponseEntity.ok()
                 .headers(new HttpHeaders())
                 .contentLength(session.getPhoto().length)
-                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(new ByteArrayResource(session.getPhoto()));
     }
 
@@ -149,7 +151,6 @@ public class SessionController {
         return "session/selectPlace";
     }
 
-    /* Перенести метод в контроллер билета */
     /**
      * Метод возвращает представление с информацией о сеансе, номере ряда и номере места
      * @param model Модель с данными
